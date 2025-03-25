@@ -30,7 +30,6 @@ function App() {
     return ansiColors[ansi] || "#ffffff"; // Default to white
 };
 
-
   const handleClick = (ansi: string) => {
     const textarea = document.querySelector("#textarea") as HTMLDivElement;
     if (!textarea) return;
@@ -78,9 +77,6 @@ function App() {
     // Update state
     // setText(textarea.innerHTML);
 };
-
-
-
 
   const convertToANSI = (nodes: NodeListOf<ChildNode> | ChildNode[], states: any[]): string => {
     let text = "";
