@@ -30,6 +30,35 @@ function App() {
     return ansiColors[ansi] || "#ffffff"; // Default to white
 };
 
+const handleReset = () => {
+  const textarea = document.querySelector("#textarea") as HTMLDivElement;
+  if (!textarea) return;
+
+  // Get all <span> elements inside the textarea
+  const spans = textarea.querySelectorAll("span");
+
+  spans.forEach((span) => {
+      // Replace span with its plain text content
+      const textNode = document.createTextNode(span.innerText);
+      span.replaceWith(textNode);
+  });
+
+  // Normalize the text to clean up extra nodes
+  textarea.normalize();
+};
+
+
+  const handleDelete = () => {
+    const textarea = document.querySelector("#textarea") as HTMLDivElement;
+    if (!textarea) return;
+
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return;
+
+    const range = selection.getRangeAt(0);
+    range.deleteContents();
+};
+
   const handleClick = (ansi: string) => {
     const textarea = document.querySelector("#textarea") as HTMLDivElement;
     if (!textarea) return;
@@ -158,9 +187,16 @@ const handleCopy = async () => {
         <button
           data-ansi="0"
           className="button bg-[#4f545c] hover:bg-[#6b7280]"
-          onClick={() => handleClick("0")}
+          onClick={() => handleReset()}
         >
           Reset All
+        </button>
+        <button
+          data-ansi="0"
+          className="button bg-[#4f545c] hover:bg-[#6b7280]"
+          onClick={() => handleDelete()}
+        >
+          Delete
         </button>
         <button
           data-ansi="1"
